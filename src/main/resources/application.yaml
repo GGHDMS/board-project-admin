@@ -6,6 +6,7 @@ logging:
     com.study.projectboardadmin: debug
     org.springframework.web.servlet: debug
     org.hibernate.type.descriptor.sql.BasicBinder: trace
+    org.springframework.web.client.ResTemplate: debug
 
 server.port: 8081
 
@@ -43,6 +44,7 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id # username 식별자를 id 로 하겠다
 
+project.board.url: http://localhost:8080
 ---
 
 spring:
