@@ -44,6 +44,7 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id # username 식별자를 id 로 하겠다
 
+project.board.url: http://localhost:8080
 ---
 
 spring:
