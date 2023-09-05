@@ -32,6 +32,8 @@ public class ArticleClientResponse {
         );
     }
 
+    public List<ArticleDto> articles() { return this.embedded.getArticles(); }
+
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
