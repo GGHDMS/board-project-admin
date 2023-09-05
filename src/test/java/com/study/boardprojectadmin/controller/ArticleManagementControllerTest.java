@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@DisplayName("View 컨트롤러 - 게시글 관리")
+@DisplayName("컨트롤러 - 게시글 관리")
 @WebMvcTest(ArticleManagementController.class)
 @ContextConfiguration(classes = {ArticleManagementController.class, SecurityConfig.class})
 class ArticleManagementControllerTest {

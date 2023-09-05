@@ -100,7 +100,7 @@ class ArticleManagementServiceTest {
             service.verify();
         }
 
-        @DisplayName("게시판 API 를 호출하면, 게시글을 가져온다")
+        @DisplayName("게시판 ID 와 함께 게시글 API 를 호출하면, 게시글을 가져온다")
         @Test
         void givenArticleId_whenCallingArticleApi_thenReturnArticle() throws Exception {
             //given
@@ -130,7 +130,7 @@ class ArticleManagementServiceTest {
 
         @DisplayName("게시글 Id와 함께 게시글 삭제 API 를 호출하면, 게시글을 삭제한다")
         @Test
-        void givenArticleId_whenCallingDeleteArticleApi_thenDeleteAnArticle() throws Exception {
+        void givenArticleId_whenCallingDeleteArticleApi_thenDeleteArticle() throws Exception {
             //given
             Long articleId = 1L;
 
