@@ -1,7 +1,6 @@
 package com.study.boardprojectadmin.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.study.boardprojectadmin.domain.constant.RoleType;
 import com.study.boardprojectadmin.dto.ArticleCommentDto;
 import com.study.boardprojectadmin.dto.UserAccountDto;
 import com.study.boardprojectadmin.dto.properties.ProjectProperties;
@@ -21,7 +20,6 @@ import org.springframework.test.web.client.MockRestServiceServer;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
@@ -126,7 +124,7 @@ class ArticleCommentManagementServiceTest {
             service.verify();
         }
 
-        @DisplayName("댓글 Id와 함께 댓글 삭제 API 를 호출하면, 댓글을 삭제한다")
+        @DisplayName("댓글 ID와 함께 댓글 삭제 API 를 호출하면, 댓글을 삭제한다")
         @Test
         void givenCommentId_whenCallingDeleteCommentApi_thenDeleteComment() throws Exception {
             //given
@@ -162,7 +160,6 @@ class ArticleCommentManagementServiceTest {
         private UserAccountDto createUserAccountDto() {
             return UserAccountDto.of(
                     "hsmTest",
-                    Set.of(RoleType.ADMIN),
                     "hsm@email.com",
                     "hsm-test",
                     "test memo"

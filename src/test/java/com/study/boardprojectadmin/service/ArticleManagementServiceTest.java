@@ -1,7 +1,6 @@
 package com.study.boardprojectadmin.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.study.boardprojectadmin.domain.constant.RoleType;
 import com.study.boardprojectadmin.dto.ArticleDto;
 import com.study.boardprojectadmin.dto.UserAccountDto;
 import com.study.boardprojectadmin.dto.properties.ProjectProperties;
@@ -21,7 +20,6 @@ import org.springframework.test.web.client.MockRestServiceServer;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
@@ -58,7 +56,7 @@ class ArticleManagementServiceTest {
     @DisplayName("API mocking 테스트")
     @EnableConfigurationProperties(ProjectProperties.class)
     @AutoConfigureWebClient(registerRestTemplate = true)
-    @RestClientTest(ArticleManagementServiceTest.class)
+    @RestClientTest(ArticleManagementService.class)
     @Nested
     class RestTemplateTest {
         @Autowired
@@ -128,7 +126,7 @@ class ArticleManagementServiceTest {
             service.verify();
         }
 
-        @DisplayName("게시글 Id와 함께 게시글 삭제 API 를 호출하면, 게시글을 삭제한다")
+        @DisplayName("게시글 ID와 함께 게시글 삭제 API 를 호출하면, 게시글을 삭제한다")
         @Test
         void givenArticleId_whenCallingDeleteArticleApi_thenDeleteArticle() throws Exception {
             //given
@@ -164,7 +162,6 @@ class ArticleManagementServiceTest {
         private UserAccountDto createUserAccountDto() {
             return UserAccountDto.of(
                     "hsmTest",
-                    Set.of(RoleType.ADMIN),
                     "hsm@email.com",
                     "hsm-test",
                     "test memo"
