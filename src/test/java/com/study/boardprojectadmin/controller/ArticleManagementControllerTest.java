@@ -1,7 +1,6 @@
 package com.study.boardprojectadmin.controller;
 
 import com.study.boardprojectadmin.config.SecurityConfig;
-import com.study.boardprojectadmin.domain.constant.RoleType;
 import com.study.boardprojectadmin.dto.ArticleDto;
 import com.study.boardprojectadmin.dto.UserAccountDto;
 import com.study.boardprojectadmin.service.ArticleManagementService;
@@ -16,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 import static org.mockito.BDDMockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -60,7 +58,7 @@ class ArticleManagementControllerTest {
         given(articleManagementService.getArticle(articleId)).willReturn(articleDto);
 
         //when & then
-        mvc.perform(get("/management/articles" + articleId))
+        mvc.perform(get("/management/articles/" + articleId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(articleId))
@@ -80,7 +78,7 @@ class ArticleManagementControllerTest {
 
         //when & then
         mvc.perform(
-                        post("/management/articles" + articleId)
+                        post("/management/articles/" + articleId)
                                 .with(csrf())
                 )
                 .andExpect(status().is3xxRedirection())
@@ -108,7 +106,6 @@ class ArticleManagementControllerTest {
     private UserAccountDto createUserAccountDto() {
         return UserAccountDto.of(
                 "hsmTest",
-                Set.of(RoleType.ADMIN),
                 "hsm@email.com",
                 "hsm-test",
                 "test memo"
