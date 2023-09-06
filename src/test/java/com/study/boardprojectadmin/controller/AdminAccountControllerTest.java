@@ -13,9 +13,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("View 컨트롤러 - 어드민 회원")
-@WebMvcTest(AdminUserAccountController.class)
-@ContextConfiguration(classes = {AdminUserAccountController.class, SecurityConfig.class})
-class AdminUserAccountControllerTest {
+@WebMvcTest(AdminAccountController.class)
+@ContextConfiguration(classes = {AdminAccountController.class, SecurityConfig.class})
+class AdminAccountControllerTest {
 
     @Autowired
     private MockMvc mvc;
