@@ -2,10 +2,10 @@ package com.study.boardprojectadmin.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.study.boardprojectadmin.domain.constant.RoleType;
-import com.study.boardprojectadmin.dto.ArticleDto;
+import com.study.boardprojectadmin.dto.ArticleCommentDto;
 import com.study.boardprojectadmin.dto.UserAccountDto;
 import com.study.boardprojectadmin.dto.properties.ProjectProperties;
-import com.study.boardprojectadmin.dto.response.ArticleClientResponse;
+import com.study.boardprojectadmin.dto.response.ArticleCommentClientResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -29,24 +29,24 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 @ActiveProfiles("test")
-@DisplayName("비즈니스 로직 - 게시글 관리")
-class ArticleManagementServiceTest {
-
+@DisplayName("비즈니스 로직 - 댓글 관리")
+class ArticleCommentManagementServiceTest {
+    
     //    @Disabled("실제 API 호출 결과 관찰용이므로 평사시엔 비활성화 한다.")
     @DisplayName("실제 API 호출 테스트")
     @SpringBootTest
     @Nested
     class RealApiTest {
         @Autowired
-        private ArticleManagementService sut;
+        private ArticleCommentManagementService sut;
 
-        @DisplayName("게시글 API 를 호출하면, 게시글을 가져온다")
+        @DisplayName("댓글 API 를 호출하면, 댓글을 가져온다")
         @Test
-        void givenNothing_whenCallingArticleApi_thenReturnArticleList() {
+        void givenNothing_whenCallingCommentApi_thenReturnCommentList() {
             //given
 
             //when
-            List<ArticleDto> result = sut.getArticles();
+            List<ArticleCommentDto> result = sut.getArticleComments();
 
             //then
             System.out.println(result.stream().findFirst());
@@ -58,11 +58,11 @@ class ArticleManagementServiceTest {
     @DisplayName("API mocking 테스트")
     @EnableConfigurationProperties(ProjectProperties.class)
     @AutoConfigureWebClient(registerRestTemplate = true)
-    @RestClientTest(ArticleManagementServiceTest.class)
+    @RestClientTest(ArticleCommentManagementService.class)
     @Nested
     class RestTemplateTest {
         @Autowired
-        private ArticleManagementService sut;
+        private ArticleCommentManagementService sut;
 
         @Autowired
         private ProjectProperties projectProperties;
@@ -73,87 +73,85 @@ class ArticleManagementServiceTest {
         @Autowired
         private ObjectMapper mapper;
 
-        @DisplayName("게시글 목록 API 를 호출하면, 게시글들을 가져온다.")
+        @DisplayName("댓글 목록 API 를 호출하면, 댓글들을 가져온다.")
         @Test
-        void givenNothing_whenCallingArticleApi_thenReturnsArticleList() throws Exception {
+        void givenNothing_whenCallingCommentApi_thenReturnsCommentList() throws Exception {
 
             //given
-            ArticleDto expectedArticle = createArticleDto("제목", "글");
-            ArticleClientResponse expectedResponse = ArticleClientResponse.of(List.of(expectedArticle));
+            ArticleCommentDto expectedComment = createArticleCommentDto("댓글");
+            ArticleCommentClientResponse expectedResponse = ArticleCommentClientResponse.of(List.of(expectedComment));
             service
-                    .expect(requestTo(projectProperties.getBoard().getUrl() + "/api/articles?size=10000"))
+                    .expect(requestTo(projectProperties.getBoard().getUrl() + "/api/articleComments?size=10000"))
                     .andRespond(withSuccess(
                             mapper.writeValueAsString(expectedResponse),
                             MediaType.APPLICATION_JSON
                     ));
 
             //when
-            List<ArticleDto> result = sut.getArticles();
+            List<ArticleCommentDto> result = sut.getArticleComments();
 
             //then
             assertThat(result).first()
-                    .hasFieldOrPropertyWithValue("id", expectedArticle.getId())
-                    .hasFieldOrPropertyWithValue("title", expectedArticle.getTitle())
-                    .hasFieldOrPropertyWithValue("content", expectedArticle.getContent())
-                    .hasFieldOrPropertyWithValue("userAccount.nickname", expectedArticle.getUserAccount().getNickname());
+                    .hasFieldOrPropertyWithValue("id", expectedComment.getId())
+                    .hasFieldOrPropertyWithValue("content", expectedComment.getContent())
+                    .hasFieldOrPropertyWithValue("userAccount.nickname", expectedComment.getUserAccount().getNickname());
 
             service.verify();
         }
 
-        @DisplayName("게시판 ID 와 함께 게시글 API 를 호출하면, 게시글을 가져온다")
+        @DisplayName("댓글 ID 와 함께 댓글 API 를 호출하면, 댓글을 가져온다")
         @Test
-        void givenArticleId_whenCallingArticleApi_thenReturnArticle() throws Exception {
+        void givenCommentId_whenCallingCommentApi_thenReturnComment() throws Exception {
             //given
 
-            Long articleId = 1L;
-            ArticleDto expectedArticle = createArticleDto("게시판", "내용");
+            Long commentId = 1L;
+            ArticleCommentDto expectedComment = createArticleCommentDto("내용");
 
             service
-                    .expect(requestTo(projectProperties.getBoard().getUrl() + "/api/articles/" + articleId))
+                    .expect(requestTo(projectProperties.getBoard().getUrl() + "/api/articleComments/" + commentId))
                     .andRespond(withSuccess(
-                            mapper.writeValueAsString(expectedArticle),
+                            mapper.writeValueAsString(expectedComment),
                             MediaType.APPLICATION_JSON
                     ));
 
             //when
-            ArticleDto result = sut.getArticle(articleId);
+            ArticleCommentDto result = sut.getArticleComment(commentId);
 
             //then
             assertThat(result)
-                    .hasFieldOrPropertyWithValue("id", expectedArticle.getId())
-                    .hasFieldOrPropertyWithValue("title", expectedArticle.getTitle())
-                    .hasFieldOrPropertyWithValue("content", expectedArticle.getContent())
-                    .hasFieldOrPropertyWithValue("userAccount.nickname", expectedArticle.getUserAccount().getNickname());
+                    .hasFieldOrPropertyWithValue("id", expectedComment.getId())
+                    .hasFieldOrPropertyWithValue("content", expectedComment.getContent())
+                    .hasFieldOrPropertyWithValue("userAccount.nickname", expectedComment.getUserAccount().getNickname());
 
             service.verify();
         }
 
-        @DisplayName("게시글 Id와 함께 게시글 삭제 API 를 호출하면, 게시글을 삭제한다")
+        @DisplayName("댓글 Id와 함께 댓글 삭제 API 를 호출하면, 댓글을 삭제한다")
         @Test
-        void givenArticleId_whenCallingDeleteArticleApi_thenDeleteArticle() throws Exception {
+        void givenCommentId_whenCallingDeleteCommentApi_thenDeleteComment() throws Exception {
             //given
-            Long articleId = 1L;
+            Long commentId = 1L;
 
             service
-                    .expect(requestTo(projectProperties.getBoard().getUrl() + "/api/articles/" + articleId))
+                    .expect(requestTo(projectProperties.getBoard().getUrl() + "/api/articleComments/" + commentId))
                     .andExpect(method(HttpMethod.DELETE))
                     .andRespond(withSuccess());
 
             //when
-            sut.deleteArticle(articleId);
+            sut.deleteArticleComment(commentId);
 
             //then
             service.verify();
         }
 
 
-        private ArticleDto createArticleDto(String title, String content) {
-            return ArticleDto.of(
+        private ArticleCommentDto createArticleCommentDto(String content) {
+            return ArticleCommentDto.of(
+                    1L,
                     1L,
                     createUserAccountDto(),
-                    title,
-                    content,
                     null,
+                    content,
                     LocalDateTime.now(),
                     "Hsm",
                     LocalDateTime.now(),
