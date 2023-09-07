@@ -1,6 +1,6 @@
 package com.study.boardprojectadmin.controller;
 
-import com.study.boardprojectadmin.config.SecurityConfig;
+import com.study.boardprojectadmin.config.TestSecurityConfig;
 import com.study.boardprojectadmin.dto.ArticleCommentDto;
 import com.study.boardprojectadmin.dto.UserAccountDto;
 import com.study.boardprojectadmin.service.ArticleCommentManagementService;
@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @DisplayName("컨트롤러 - 댓글 관리")
 @WebMvcTest(ArticleCommentManagementController.class)
-@ContextConfiguration(classes = {ArticleCommentManagementController.class, SecurityConfig.class})
+@ContextConfiguration(classes = {ArticleCommentManagementController.class, TestSecurityConfig.class})
 class ArticleCommentManagementControllerTest {
 
     @Autowired
