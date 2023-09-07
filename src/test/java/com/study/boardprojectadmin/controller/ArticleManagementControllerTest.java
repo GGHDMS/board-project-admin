@@ -1,6 +1,6 @@
 package com.study.boardprojectadmin.controller;
 
-import com.study.boardprojectadmin.config.SecurityConfig;
+import com.study.boardprojectadmin.config.TestSecurityConfig;
 import com.study.boardprojectadmin.dto.ArticleDto;
 import com.study.boardprojectadmin.dto.UserAccountDto;
 import com.study.boardprojectadmin.service.ArticleManagementService;
@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @DisplayName("컨트롤러 - 게시글 관리")
 @WebMvcTest(ArticleManagementController.class)
-@ContextConfiguration(classes = {ArticleManagementController.class, SecurityConfig.class})
+@ContextConfiguration(classes = {ArticleManagementController.class, TestSecurityConfig.class})
 class ArticleManagementControllerTest {
 
     @Autowired
