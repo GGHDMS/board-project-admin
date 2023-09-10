@@ -5,6 +5,7 @@ import com.study.boardprojectadmin.dto.ArticleDto;
 import com.study.boardprojectadmin.dto.UserAccountDto;
 import com.study.boardprojectadmin.dto.properties.ProjectProperties;
 import com.study.boardprojectadmin.dto.response.ArticleClientResponse;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @DisplayName("비즈니스 로직 - 게시글 관리")
 class ArticleManagementServiceTest {
 
-    //    @Disabled("실제 API 호출 결과 관찰용이므로 평사시엔 비활성화 한다.")
+    @Disabled("실제 API 호출 결과 관찰용이므로 평사시엔 비활성화 한다.")
     @DisplayName("실제 API 호출 테스트")
     @SpringBootTest
     @Nested
