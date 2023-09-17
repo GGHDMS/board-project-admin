@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -31,6 +32,7 @@ class UserAccountManagementControllerTest {
     @MockBean
     private UserAccountManagementService userAccountManagementService;
 
+    @WithMockUser(username = "tester", roles = "USER")
     @DisplayName("[View][GET] 회원 관리 페이지 - 정상 호출")
     @Test
     public void givenNothing_whenRequestingUserAccountsManagementView_thenReturnsUserAccountsManagementView() throws Exception {
@@ -47,6 +49,7 @@ class UserAccountManagementControllerTest {
         then(userAccountManagementService).should().getUserAccounts();
     }
 
+    @WithMockUser(username = "tester", roles = "USER")
     @DisplayName("[View][GET] 회원 1개 - 정상 호출")
     @Test
     public void givenUserAccountId_whenRequestingUserAccountManagementView_thenReturnsUserAccountManagementView() throws Exception {
@@ -59,12 +62,13 @@ class UserAccountManagementControllerTest {
         mvc.perform(get("/management/user-accounts/" + userId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(userId))
+                .andExpect(jsonPath("$.userId").value(userId))
                 .andExpect(jsonPath("$.nickname").value(userAccountDto.getNickname()));
 
-        then(userAccountManagementService).should().getUserAccounts();
+        then(userAccountManagementService).should().getUserAccount(userId);
     }
 
+    @WithMockUser(username = "tester", roles = "MANAGER")
     @DisplayName("[View][Post] 회원 삭제 - 정상 호출")
     @Test
     public void givenUserAccountId_whenRequestingDelete_thenRedirectToUserAccountManagementView() throws Exception {
