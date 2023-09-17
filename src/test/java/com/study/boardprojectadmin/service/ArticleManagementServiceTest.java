@@ -108,7 +108,7 @@ class ArticleManagementServiceTest {
             ArticleDto expectedArticle = createArticleDto("게시판", "내용");
 
             service
-                    .expect(requestTo(projectProperties.getBoard().getUrl() + "/api/articles/" + articleId))
+                    .expect(requestTo(projectProperties.getBoard().getUrl() + "/api/articles/" + articleId + "?projection=withUserAccount"))
                     .andRespond(withSuccess(
                             mapper.writeValueAsString(expectedArticle),
                             MediaType.APPLICATION_JSON

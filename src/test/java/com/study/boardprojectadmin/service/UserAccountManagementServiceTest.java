@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.study.boardprojectadmin.dto.UserAccountDto;
 import com.study.boardprojectadmin.dto.properties.ProjectProperties;
 import com.study.boardprojectadmin.dto.response.UserAccountClientResponse;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 @DisplayName("비즈니스 로직 - 회원 관리")
 class UserAccountManagementServiceTest {
 
-    //    @Disabled("실제 API 호출 결과 관찰용이므로 평사시엔 비활성화 한다.")
+    @Disabled("실제 API 호출 결과 관찰용이므로 평사시엔 비활성화 한다.")
     @DisplayName("실제 API 호출 테스트")
     @SpringBootTest
     @Nested
@@ -89,7 +90,7 @@ class UserAccountManagementServiceTest {
 
             //then
             assertThat(result).first()
-                    .hasFieldOrPropertyWithValue("id", expectedUserAccount.getUserId())
+                    .hasFieldOrPropertyWithValue("userId", expectedUserAccount.getUserId())
                     .hasFieldOrPropertyWithValue("nickname", expectedUserAccount.getNickname());
 
             service.verify();
@@ -115,7 +116,7 @@ class UserAccountManagementServiceTest {
 
             //then
             assertThat(result)
-                    .hasFieldOrPropertyWithValue("id", expectedUserAccount.getUserId())
+                    .hasFieldOrPropertyWithValue("userId", expectedUserAccount.getUserId())
                     .hasFieldOrPropertyWithValue("nickname", expectedUserAccount.getNickname());
 
             service.verify();
