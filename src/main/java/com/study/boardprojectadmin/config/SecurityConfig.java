@@ -91,8 +91,8 @@ public class SecurityConfig {
                                             dummyPassword,
                                             roleTypes,
                                             kakaoOAuth2Response.email(),
-                                            kakaoOAuth2Response.nickname(),
-                                            null
+                                            null,
+                                            kakaoOAuth2Response.nickname()
                                     )
                             )
                     );
