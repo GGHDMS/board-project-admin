@@ -63,6 +63,7 @@ class AdminAccountServiceTest {
     public void givenUserParams_whenSaving_thenSavesAdminAccount() throws Exception{
         //given
         AdminAccount adminAccount = createSigningUpAdminAccount("hsm", Set.of(RoleType.USER));
+        given(adminAccountRepository.save(adminAccount)).willReturn(adminAccount);
 
         //when
         AdminAccountDto result = sut.saveUser(adminAccount.getUserId(), adminAccount.getUserPassword(), adminAccount.getRoleTypes(), adminAccount.getEmail(), adminAccount.getNickname(), adminAccount.getMemo());
@@ -75,7 +76,7 @@ class AdminAccountServiceTest {
                 .hasFieldOrPropertyWithValue("email", adminAccount.getEmail())
                 .hasFieldOrPropertyWithValue("nickname", adminAccount.getNickname())
                 .hasFieldOrPropertyWithValue("memo", adminAccount.getMemo())
-                .hasFieldOrPropertyWithValue("createBy", adminAccount.getCreatedBy())
+                .hasFieldOrPropertyWithValue("createdBy", adminAccount.getCreatedBy())
                 .hasFieldOrPropertyWithValue("modifiedBy", adminAccount.getModifiedBy());
 
         then(adminAccountRepository).should().save(adminAccount);

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -19,6 +20,7 @@ class MainControllerTest {
     @Autowired
     private MockMvc mvc;
 
+    @WithMockUser(username = "tester", roles = "USER")
     @DisplayName("[View][GET] 루트 페이지 -> 게시글 관리 페이지 Forwarding")
     @Test
     public void givenNothing_whenRequestingRootView_thenForwardsToArticleManagementView() throws Exception{
